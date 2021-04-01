@@ -1,0 +1,10 @@
+{
+	vendorId "eqela"
+	projectId "jk-db"
+	title "JK DB"
+	libraries [
+		"jk-core:0.37.0"
+		"jk-data:0.33.0"
+		"jk-net:0.39.0"
+	]
+}

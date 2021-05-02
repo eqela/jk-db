@@ -75,8 +75,11 @@ class MyStatement is SQLStatement
 		params += param
 	}
 
-	func setIsStoredProcedure(v as bool) as SQLStatement:
+	func setIsStoredProcedure(v as bool) as SQLStatement
+	{
 		isStoredProcedure = v
+		return this
+	}
 
 	func getIsStoredProcedure as bool:
 		return isStoredProcedure
@@ -623,11 +626,11 @@ func createAuthenticationPacket(authPlugin as string, authData as string, forAut
 		var sz = sizeof h1
 		var sz2 = sizeof h2
 		assert sz == sz2:
-			logError("SHA256 encoder returned different size buffers " .. String.forInteger(sz) .. " and " .. String.forInteger(sz2) .. "!")
+			logError("SHA256 encoder returned different size buffers " .. String.forLongInteger(sz) .. " and " .. String.forLongInteger(sz2) .. "!")
 		for(var n=0; n<sz; n++):
 			h1[n] = h1[n] ^ h2[n]
 		if not forAuthSwitch {
-			pm.appendByte(sz)
+			pm.appendByte(sz as int)
 			pm.appendBuffer(h1)
 			pm.appendNullTerminatedString("caching_sha2_password")
 		}
@@ -792,7 +795,7 @@ func sendSync(packet as buffer) as bool
 	assert socket && packet
 	assert socket.write(packet, -1) > 0 {
 		if connectionState == ConnectionState.COMMAND {
-			logWarning("Failed to send packet of " .. String.forInteger(sizeof packet) .. " bytes. Reconnecting.")
+			logWarning("Failed to send packet of " .. String.forLongInteger(sizeof packet) .. " bytes. Reconnecting.")
 			reconnectSync()
 		}
 	}
@@ -957,7 +960,7 @@ class MyResultSet abstract private is SQLResultSetIterator
 	pvar columns as vector<ColumnDefinition>
 	pvar rowData as vector<object>
 
-	func getColumnCount as int:
+	func getColumnCount override as int:
 		return Vector.getSize(columns)
 
 	func getColumnName(n as int) override as string
@@ -1029,6 +1032,9 @@ class StaticResultSet is MyResultSet
 		setRowData(Vector.get(data, current++ as int))
 		return true
 	}
+
+	func close override:
+		nop
 }
 
 class SyncFetchResultSet private is MyResultSet
@@ -1263,7 +1269,7 @@ func parseRecord(packet as buffer, columns as vector<ColumnDefinition>) private 
 			dt.setDayOfMonth(day)
 			o = dt
 		}
-		else if type == FieldType.MYSQL_TYPE_TIMESTAMP || type == type == FieldType.MYSQL_TYPE_DATETIME {
+		else if type == FieldType.MYSQL_TYPE_TIMESTAMP || type == FieldType.MYSQL_TYPE_DATETIME {
 			var length = walker.getInt8()
 			var year = walker.getInt16()
 			var month = walker.getInt8()

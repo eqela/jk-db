@@ -542,6 +542,8 @@ class ResultSet is SQLResultSetIterator
 		return v
 	}
 
+	func getColumnLong(n as int) stub override as long
+
 	func getColumnDouble(n as int) override as double
 	{
 		assert compiledStmt

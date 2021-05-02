@@ -1,10 +1,10 @@
 {
-	vendorId "eqela"
+	namespace "eqela"
 	projectId "jk-db"
 	title "JK DB"
 	libraries [
-		"jk-core:0.37.0"
-		"jk-data:0.33.0"
-		"jk-net:0.39.0"
+		"jk-core:0.40.0"
+		"jk-data:0.35.0"
+		"jk-net:0.43.0"
 	]
 }

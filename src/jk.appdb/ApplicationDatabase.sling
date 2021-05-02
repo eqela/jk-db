@@ -81,6 +81,10 @@ func close
 
 func updateTable(table as SQLTableInfo)
 {
+	if not table:
+		Error.throw("nullTable", "updateTable")
+	if not db:
+		Error.throw("nullDb", "updateTable")
 	Log.info(ctx, "Updating table: `" .. table.getName() .. "' ..")
 	if not db.ensureTableExistsSync(table):
 		Error.throw("failedToUpdateTable", table.getName())

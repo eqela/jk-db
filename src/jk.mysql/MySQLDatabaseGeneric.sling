@@ -1336,7 +1336,7 @@ func parseRecord(packet as buffer, columns as vector<ColumnDefinition>) private 
 			}
 			else if cs == 255 || cs == 45 || cs == 33 {
 				// utf8mb4 or utf8
-				o = walker.getLengthEncodedString()
+				o = String.forUTF8Buffer(walker.getLengthEncodedBuffer())
 			}
 			else if cs == 11 {
 				// ascii
@@ -1352,7 +1352,7 @@ func parseRecord(packet as buffer, columns as vector<ColumnDefinition>) private 
 			o = walker.getLengthEncodedString()
 		}
 		else if type == FieldType.MYSQL_TYPE_STRING || type == FieldType.MYSQL_TYPE_VARCHAR || type == FieldType.MYSQL_TYPE_VAR_STRING {
-			o = walker.getLengthEncodedString()
+			o = String.forUTF8Buffer(walker.getLengthEncodedBuffer())
 		}
 		else if type == FieldType.MYSQL_TYPE_JSON {
 			o = walker.getLengthEncodedString()

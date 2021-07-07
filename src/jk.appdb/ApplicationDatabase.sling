@@ -63,6 +63,7 @@ func initialize(ctx as LoggingContext, connectionString as string)
 {
 	if String.isEmpty(connectionString):
 		Error.throw("configurationValueMissing", "DATABASE")
+	connectionString = String.strip(connectionString)
 	Log.debug(ctx, "Connecting to database: `" .. connectionString .. "' .. ")
 	var db = SQLDatabaseFactory.getDatabase(ctx, connectionString)
 	if not db:

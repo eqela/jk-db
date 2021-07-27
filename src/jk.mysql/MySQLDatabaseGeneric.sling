@@ -1334,7 +1334,7 @@ func parseRecord(packet as buffer, columns as vector<ColumnDefinition>) private 
 				// binary
 				o = walker.getLengthEncodedBuffer()
 			}
-			else if cs == 255 || cs == 45 || cs == 33 {
+			else if cs == 255 || cs == 45 || cs == 33 || cs == 224 {
 				// utf8mb4 or utf8
 				o = String.forUTF8Buffer(walker.getLengthEncodedBuffer())
 			}

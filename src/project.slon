@@ -4,7 +4,7 @@
 	title "JK DB"
 	libraries [
 		"jk-core:0.40.0"
-		"jk-data:0.35.0"
-		"jk-net:0.43.0"
+		"jk-data:0.38.3"
+		"jk-net:0.50.1"
 	]
 }
